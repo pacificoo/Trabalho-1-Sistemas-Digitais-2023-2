@@ -145,12 +145,13 @@ BEGIN
 
 	-- Atribui '1' à saída sinal caso a saída s é negativa
 	sinal <= 	x_sinal WHEN (k = "011") ELSE
-			'0';
+				NOT(carry_in) WHEN (k = "100") ELSE
+				'0';
 
 	-- Decide se houve overflow nas operações de soma e incremento
 	overflow <= x_carryout0 WHEN (k = "000") ELSE
-			x_carryout1 WHEN (k = "010") ELSE
-			'0';
+				x_carryout1 WHEN (k = "010") ELSE
+				'0';
 
 	-- Verifica se a saída é "0000"
 	zero <= NOT(temp_s(0) OR temp_s(1) OR temp_s(2) OR temp_s(3));
