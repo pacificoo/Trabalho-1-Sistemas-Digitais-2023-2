@@ -19,7 +19,7 @@ ENTITY ULA IS
 	carry_in: in std_logic;
 
 	s: out std_logic_vector(3 downto 0); -- Saída
-	overflow, zero, sinal: out std_logic -- zero == '1' quando s == "0000" e sinal == '1' para indicar que a saída é negativa
+	overflow, zero, sinal, carry_out: out std_logic -- zero == '1' quando s == "0000" e sinal == '1' para indicar que a saída é negativa
     );
 END ULA;
 
@@ -150,6 +150,11 @@ BEGIN
 
 	-- Decide se houve overflow nas operações de soma e incremento
 	overflow <= x_carryout0 WHEN (k = "000") ELSE
+				x_carryout1 WHEN (k = "010") ELSE
+				'0';
+	
+	-- Saída carry_out
+	carry_out <= x_carryout0 WHEN (k = "000") ELSE
 				x_carryout1 WHEN (k = "010") ELSE
 				'0';
 
