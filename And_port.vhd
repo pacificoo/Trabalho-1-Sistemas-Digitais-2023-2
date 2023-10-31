@@ -17,11 +17,9 @@ ARCHITECTURE Dataflow OF And_port IS
 
 BEGIN
 
-	process(a)
-	begin
-		for i in 0 to 3 loop -- Verifica para posição dos vetores a e b se ambos os valores são 1
-			s(i) <= a(i) AND b(i);
-		end loop;
-	end process;
+	s(0) <= a(0) AND b(0);
+	s(1) <= a(1) AND b(1);
+	s(2) <= a(2) AND b(2);
+	s(3) <= a(3) AND b(3);
 
 END Dataflow;

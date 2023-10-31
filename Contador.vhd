@@ -3,7 +3,7 @@ USE ieee.std_logic_1164.all;
 USE IEEE.numeric_std.all;
 
 ENTITY Contador IS -- Conta de 0 a 255 em binário
-	GENERIC(t0 : INTEGER := 4000000); -- Variável usada para gerar uma dilatação de clock, dado que o clock da placa é extremamente rápido para nosso uso
+	GENERIC(t0 : INTEGER := 40000000); -- Variável usada para gerar uma dilatação de clock, dado que o clock da placa é extremamente rápido para nosso uso
 
 	PORT (
 		clk, reset: in std_logic;
@@ -14,7 +14,8 @@ END Contador;
 
 ARCHITECTURE Dataflow OF Contador IS
 
-SIGNAL contagem: UNSIGNED (7 DOWNTO 0) := "00000000";
+SIGNAL contagem: UNSIGNED(7 DOWNTO 0) := "00000000";
+SIGNAL contagem_logic: STD_LOGIC_VECTOR(7 DOWNTO 0);
 BEGIN
 
 	processo : process (clk, reset)
@@ -27,14 +28,16 @@ BEGIN
 			if (t <= t0) then -- Gera a dilatação do clock
 				t := t + 1;
 			else
-				contagem <= contagem + 1 -- Realiza a contagem
+				contagem <= contagem + 1; -- Realiza a contagem
+				t := 0;
 			end if;
 		end if;
 
-	
-	end process;
+	contagem_logic <= std_logic_vector(contagem(7 DOWNTO 0));
 
+	end process;
 	
+
 	q <= contagem; -- Atribui à saída o valor da contagem
 
 END Dataflow;

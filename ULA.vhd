@@ -144,7 +144,10 @@ BEGIN
 	s <= temp_s;
 
 	-- Atribui '1' à saída sinal caso a saída s é negativa
-	sinal <= 	x_sinal WHEN (k = "011") ELSE
+
+	sinal <= '0' WHEN (temp_s = "0000") ELSE	
+				x_sinal WHEN (k = "011") ELSE
+
 				NOT(carry_in) WHEN (k = "100") ELSE
 				'0';
 

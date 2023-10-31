@@ -26,6 +26,7 @@ ARCHITECTURE Structural OF Complemento_a_2 IS
 	end component;
 
 	signal temp:	std_logic_vector(3 downto 0);
+	signal tempx:  std_logic;
 
 BEGIN
 
@@ -38,7 +39,8 @@ BEGIN
 	-- Soma 1 ao binário invertido
 	inc: Incremento PORT MAP(
 	a => temp,
-	s => s
+	s => s,
+	carry_out => tempx
 	);
 
 END Structural;

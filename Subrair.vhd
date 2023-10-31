@@ -7,7 +7,7 @@ ENTITY Subtrair IS -- Realiza a operação a - b. Sinal é 1 se o resultado é u
     b        		: IN std_logic_vector(3 DOWNTO 0);
 
     carry_in      	: IN  std_logic;
-   
+
     s		    	: OUT std_logic_vector(3 DOWNTO 0);
     sinal      	: OUT  std_logic
     );
@@ -32,7 +32,7 @@ component Somador is
 
 signal comp_b: std_logic_vector(3 downto 0);
 signal temp1, temp2: std_logic_vector(3 downto 0);
-signal x, y :std_logic;
+signal x,y :std_logic;
 
 BEGIN
 
@@ -49,7 +49,7 @@ BEGIN
 	carry_in => '0',
 	s => temp1,
 	carry_out => x
-	)
+	);
 
 	-- Converte o resultado da soma anterior em positivo, caso o resultado seja negativo, para que a representação de saída seja em sinal-magnitude
 	comp_2: Complemento_a_2 PORT MAP(
@@ -58,10 +58,12 @@ BEGIN
 	);
 
 
-	y <= not(x);
-	sinal <= y;
+	y <= x XOR '1';
+	sinal <= '0' WHEN comp_b = "0000" ELSE
+				y;
 
-	s <= temp1 WHEN y = '0' ELSE
-	temp2 WHEN y = '1';
+	s <=	temp1 WHEN comp_b = "0000" ELSE
+			temp1 WHEN y = '0' ELSE
+			temp2 WHEN y = '1';
 
 END Behavioral;
